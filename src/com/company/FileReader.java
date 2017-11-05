@@ -20,7 +20,8 @@ public class FileReader {
                     vertices.add(new Vertex(i+1));
                 }
             }
-            currentLine = br.readLine();
+            // Skip the line that tells number of edges
+            br.readLine();
 
             while ((currentLine = br.readLine()) != null){
                 String[] parts = currentLine.split(" ");
