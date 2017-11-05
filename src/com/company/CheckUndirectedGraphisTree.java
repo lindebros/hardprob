@@ -13,29 +13,35 @@ class TGraph
 
     TGraph(int nvertices)
     {
+        edges= new int[nvertices + 1][nvertices];
+        degree = new int[nvertices + 1];
+
         this.nvertices = nvertices;
-        nedges = nvertices-1;
-        for (int i = 1; i <= MAXV; i++)
+        for (int i = 1; i <= nvertices; i++)
             degree[i] = 0;
     }
 
     void read_CCGraph(List<Edge> edges)
     {
         int x, y;
-        for (int i = 1; i <= edges.size(); i++)
+        for (int i = 0; i < edges.size(); i++)
         {
             //Adds edge between vertex x and y
             x = edges.get(i).getA().getNumber();
             y = edges.get(i).getB().getNumber();
-            insert_edge(x, y);
+            insert_edge(x, y,false);
         }
     }
 
-    void insert_edge(int x, int y)
+    void insert_edge(int x, int y,boolean directed)
     {
         edges[x][degree[x]] = y;
         degree[x]++;
-        nedges++;
+        if (!directed){
+            insert_edge(y,x,true);
+        }else {
+            nedges++;
+        }
     }
 
     void print_CCGraph()

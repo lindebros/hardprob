@@ -2,17 +2,18 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import static com.company.Subsets.getSubsets;
 import static com.company.FileReader.read;
+import static com.company.Subsets2.findSubsets;
 
 public class Main {
 
-    private static String FILENAME = "test01.uwg";
+    private static String FILENAME = "test03.uwg";
 
     public static List<Vertex> vertices;
     public static List<Edge> edges;
+
+    public static List<Edge> mst;
 
     public static void main(String[] args) {
         try {
@@ -24,16 +25,12 @@ public class Main {
         edges = new ArrayList<>();
 
         read(FILENAME,edges,vertices);
-        System.out.println("Edges: " + edges.size());
 
         List<List<Edge>> subsets;
-        subsets = getSubsets(edges,vertices.size()-1);
+        mst = findSubsets(edges,vertices.size()-1);
 
-        for (List<Edge> s:subsets){
-            for (Edge e : s){
-                System.out.print(e.getA().getNumber() + "-" + e.getB().getNumber() + " : ");
-            }
-            System.out.println();
+        for (Edge e : mst){
+            System.out.print(e.getA().getNumber() + "-" + e.getB().getNumber() + " : ");
         }
 
 //        TGraph g = new TGraph(vertices.size());
