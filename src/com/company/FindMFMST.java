@@ -9,21 +9,18 @@ import static com.company.CheckUndirectedGraphisTree.connected_components;
 /**
  * Created by Mikkel on 05/11/2017.
  */
-public class Subsets2 {
+public class FindMFMST {
 
     private static List<Edge> mst = null;
     private static int minSum = Integer.MAX_VALUE;
     private static int nvertices;
 
-    public static List<Edge> findSubsets(List<Edge> input, int k) {
+    public static List<Edge> findMFMST(List<Edge> input, int k) {
 
-        //int[] input = {10, 20, 30, 40, 50};    // input array
-        //int k = 3;                             // sequence length
         nvertices = k+1;
-        List<List<Edge>> subsets = new ArrayList<>();
 
-        int max = binomialCoeff(input.size(),k);
-        int done = 0;
+        int max = binomialCoeff(input.size(),k);    // Total amount of subsets of size k ( number of vertices - 1 )
+        int done = 0;                               // Used to keep track of how far the algorithm is.
 
         // here we'll keep indices pointing to elements in input array
         int[] s = new int[k];
@@ -46,10 +43,9 @@ public class Subsets2 {
                 }
                 getSubset(input,s);
                 done++;
-                System.out.println(done + " / " + max);
             }
         }
-        System.out.println("Minimum sum: " + minSum);
+        System.out.println("Found B: " + minSum);
         return mst;
     }
 
@@ -57,14 +53,12 @@ public class Subsets2 {
         // Get the subset, and see if it is a spanning tree.
         TGraph g = new TGraph(nvertices);
         g.read_CCGraph(subset);
-//        g.print_CCGraph();
         boolean flag = false;
         if (g.nedges == g.nvertices - 1)
         {
             flag = true;
             if (connected_components(g) == 1 && flag == true)
             {
-
                 return true;
             }
             return false;
@@ -104,7 +98,6 @@ public class Subsets2 {
 
         if (localMin < minSum ){ // Is a spanning tree; now to check if it is the minimum spanning tree
             if (isTree(input, result)) {
-
                 minSum = localMin;
                 mst = result;
             }
@@ -128,4 +121,5 @@ public class Subsets2 {
 
         return res;
     }
+
 }

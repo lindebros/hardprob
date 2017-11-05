@@ -23,7 +23,7 @@ public class FileReader {
             // Skip the line that tells number of edges
             br.readLine();
 
-            while ((currentLine = br.readLine()) != null){
+            while ((currentLine = br.readLine()) != null && currentLine != ""){
                 String[] parts = currentLine.split(" ");
                 int index1 = Integer.parseInt(parts[0]);
                 int index2 = Integer.parseInt(parts[1]);

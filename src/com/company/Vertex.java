@@ -3,15 +3,10 @@ package com.company;
 import java.util.List;
 
 public class Vertex {
-    List<Edge> connections;
-    private int number;
+    private int number; // The number used to identify the vertex. Has bugfixing purposes.
 
     Vertex(int number){
         this.number = number;
-    }
-
-    public void addEdge(Edge e){
-        connections.add(e);
     }
 
     public int getNumber() {
