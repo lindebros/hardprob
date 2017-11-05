@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 class TGraph
 {
@@ -13,36 +11,28 @@ class TGraph
     public int       nvertices;
     public int       nedges;
 
-    TGraph()
+    TGraph(int nvertices)
     {
-        nvertices = nedges = 0;
+        this.nvertices = nvertices;
+        nedges = nvertices-1;
         for (int i = 1; i <= MAXV; i++)
             degree[i] = 0;
     }
 
-    void read_CCGraph()
+    void read_CCGraph(List<Edge> edges)
     {
         int x, y;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the number of vertices: ");
-        nvertices = sc.nextInt();
-        System.out.println("Enter the number of edges: ");
-        int m = sc.nextInt();
-        System.out.println("Enter the edges: <from> <to>");
-        for (int i = 1; i <= m; i++)
+        for (int i = 1; i <= edges.size(); i++)
         {
-            x = sc.nextInt();
-            y = sc.nextInt();
+            //Adds edge between vertex x and y
+            x = edges.get(i).getA().getNumber();
+            y = edges.get(i).getB().getNumber();
             insert_edge(x, y);
         }
-        sc.close();
     }
 
     void insert_edge(int x, int y)
     {
-        if (degree[x] > MAXDEGREE)
-            System.out.printf(
-                    "Warning: insertion (%d, %d) exceeds max degree\n", x, y);
         edges[x][degree[x]] = y;
         degree[x]++;
         nedges++;
@@ -62,10 +52,17 @@ class TGraph
 
 public class CheckUndirectedGraphisTree
 {
-    static final int MAXV         = 100;
+    static int MAXV         = 100;
     static boolean   processed[]  = new boolean[MAXV];
     static boolean   discovered[] = new boolean[MAXV];
     static int       parent[]     = new int[MAXV];
+
+    CheckUndirectedGraphisTree(int nvertices){
+        MAXV = nvertices;
+        processed = new boolean[MAXV];
+        discovered = new boolean[MAXV];
+        parent   = new int[MAXV];
+    }
 
     static void bfs(TGraph g, int start)
     {
@@ -122,25 +119,5 @@ public class CheckUndirectedGraphisTree
         return c;
     }
 
-    static public void main(String[] args)
-    {
-        TGraph g = new TGraph();
-        g.read_CCGraph();
-        g.print_CCGraph();
-        boolean flag = false;
-        if (g.nedges == g.nvertices - 1)
-        {
-            flag = true;
-            if (connected_components(g) == 1 && flag == true)
-            {
-                System.out
-                        .println("Graph is a Tree, as graph is connected and Euler's criterion is satisfied.");
-            }
-        }
-        else
-        {
-            System.out
-                    .println("Graph is not a Tree, as Euler's criterion is not satisfied");
-        }
-    }
+
 }

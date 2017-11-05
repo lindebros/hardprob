@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 public class Subsets {
-    private static void getSubsets(List<Edge> superSet, int k, int idx, Set<Edge> current, List<Set<Edge>> solution) {
+    private static void getSubsets(List<Edge> superSet, int k, int idx, List<Edge> current, List<List<Edge>> solution) {
         //successful stop clause
         if (current.size() == k) {
-            solution.add(new HashSet<>(current));
+            solution.add(new ArrayList<>(current));
             return;
         }
         //unseccessful stop clause
@@ -23,9 +23,9 @@ public class Subsets {
         getSubsets(superSet, k, idx+1, current, solution);
     }
 
-    public static List<Set<Edge>> getSubsets(List<Edge> superSet, int k) {
-        List<Set<Edge>> res = new ArrayList<>();
-        getSubsets(superSet, k, 0, new HashSet<Edge>(), res);
+    public static List<List<Edge>> getSubsets(List<Edge> superSet, int k) {
+        List<List<Edge>> res = new ArrayList<>();
+        getSubsets(superSet, k, 0, new ArrayList<>(), res);
         return res;
     }
 }
